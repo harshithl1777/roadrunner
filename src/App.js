@@ -1,29 +1,32 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class App extends Component {
-  authSuccess = () => {
-    console.log('Successful authentication');
-  };
-  
-  authenticationFailure = () => {
-    console.log('Failed authentication');
-  };
+
 
   authenticateUser = () => {
-    window.Trello.authorize({
-      type: 'popup',
-      name: 'Roadrunner',
-      scope: { read: 'true', write: 'true' },
-      expiration: 'never',
-      success: this.authSuccess,
-      error: this.authFailure
-    });
-  }
+    this.API_KEY = process.env.REACT_APP_API_KEY;
+    window.open(`https://trello.com/1/authorize?response_type=token&key=${this.API_KEY}&scope=read&expiration=never&name=Roadrunner`);
+}
+
+test = () => {
+  axios.get('https://api.trello.com/1/boards/9khsMGic/lists', {
+    params: {
+        key: this.API_KEY,
+        token: this.token.value,
+    }
+  })
+  .then(({ data }) => {
+    console.log(data);
+  });
+}
 
   render() {
     return (
       <div className="App">
         <button onClick={this.authenticateUser}>Authenticate User</button>
+        <input ref={ref => this.token = ref} />
+        <button onClick={this.test}>Test</button>
       </div>
     );
   }
