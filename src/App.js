@@ -17,7 +17,17 @@ test = () => {
     }
   })
   .then(({ data }) => {
-    console.log(data);
+    axios.get(`https://api.trello.com/1/lists/${data[0].id}/cards?`, {
+      params: {
+        key: this.API_KEY,
+        token: this.token.value,
+      }
+    })
+    .then(({ data }) => {
+      data.map((card) => {
+        console.log(card.name);
+      });
+    })
   });
 }
 
