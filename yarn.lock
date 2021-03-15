@@ -3267,6 +3267,11 @@
   "resolved" "https://registry.yarnpkg.com/check-types/-/check-types-11.1.2.tgz"
   "version" "11.1.2"
 
+"child_process@^1.0.2":
+  "integrity" "sha1-sffn/HPSXn/R1FWtyU4UODAYK1o="
+  "resolved" "https://registry.npmjs.org/child_process/-/child_process-1.0.2.tgz"
+  "version" "1.0.2"
+
 "chokidar@^2.1.8":
   "integrity" "sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg=="
   "resolved" "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz"

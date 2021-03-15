@@ -8,7 +8,7 @@ class App extends Component {
     window.Trello.setKey(this.API_KEY);
     window.Trello.authorize({
       type: 'popup',
-      name: 'Getting Started Application',
+      name: 'Roadrunner',
       scope: {
         read: 'true',
         write: 'true' },
