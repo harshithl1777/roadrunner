@@ -20,23 +20,33 @@ class App extends Component {
 
 authSuccess = () => {
   this.userToken = window.Trello.token();
-  axios.get('https://api.trello.com/1/boards/9khsMGic/lists', {
+  axios.get('https://api.trello.com/1/boards/RwrH3XiI/lists', {
     params: {
         key: this.API_KEY,
         token: this.userToken,
     }
   })
   .then(({ data }) => {
-    axios.get(`https://api.trello.com/1/lists/${data[0].id}/cards?`, {
-      params: {
-        key: this.API_KEY,
-        token: this.userToken,
-      }
+    console.log(data);
+    // axios.get(`https://api.trello.com/1/lists/${data[0].id}/cards?`, {
+    //   params: {
+    //     key: this.API_KEY,
+    //     token: this.userToken,
+    //   }
+    // })
+    // .then(({ data }) => {
+    //   data.map((card) => {
+    //     console.log(card.name);
+    //   });
+    // })
+    axios.post('/test/token', {
+      token: this.userToken
     })
     .then(({ data }) => {
-      data.map((card) => {
-        console.log(card.name);
-      });
+      alert(data);
+    })
+    .catch((err) => {
+      console.log(err);
     })
   });
 }

@@ -1,22 +1,22 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config({ path: './config/.env' });
+const bodyParser = require('body-parser');
+const callbacks = require('./routes/callbacks.js');
 
 const app = express();
-const port = 3000 || process.env.PORT.
-app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use(express.static('public'));
+app.use(bodyParser.json());
 
-app.get('/api', ({ query }, res) => {
-    if (query.token === '345345') {
-        res.send('Welcome');
-    } else {
-        res.send('Invalid or missing token');
-    }
-});
+app.use(callbacks);
+
+app.use(express.static(path.join(__dirname, '..', 'build')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
+
+const port = 5000 || process.env.PORT;
 
 app.listen(port, () => {
     console.log(`Express listening on port ${port}`);
