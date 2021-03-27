@@ -3,15 +3,11 @@ const axios = require('axios');
 const app = module.exports = express();
 
 app.post('/webhook', ({ body }, res) => {
-    console.log(body);
+    console.log(body.action.data);
 });
 
 app.head('/webhook', ({ query }, res) => {
-    if (query.token === process.env.WEBHOOK_ROUTE_KEY) {
-        res.status(200).send('Ready for webhook service');
-    } else {
-        res.status(500).send('Invalid route key');
-    }
+    res.status(200).send('Ready for webhook service');
 });
 
 app.post('/test/token', ({ body }, res) => {
@@ -20,8 +16,8 @@ app.post('/test/token', ({ body }, res) => {
         key: process.env.TRELLO_API_KEY,
         token: body.token,
         description: 'test webhook 1',
-        callbackURL: `http://localhost:5000/webhook?token=${process.env.WEBHOOK_ROUTE_KEY}`,
-        idModel: 'RwrH3XiI',
+        callbackURL: `${process.env.TEST_URL}/webhook`,
+        idModel: '5d597ff5bdea837eb5b639a5',
     })
     .then(({ data }) => {
         console.log(data);
