@@ -4,7 +4,7 @@ import axios from 'axios';
 class App extends Component {
 
   authenticateUser = () => {
-    this.API_KEY = process.env.REACT_APP_API_KEY;
+    this.API_KEY = process.env.REACT_APP_TRELLO_API_KEY;
     window.Trello.setKey(this.API_KEY);
     window.Trello.authorize({
       type: 'popup',
@@ -20,34 +20,16 @@ class App extends Component {
 
 authSuccess = () => {
   this.userToken = window.Trello.token();
-  axios.get('https://api.trello.com/1/boards/RwrH3XiI/lists', {
-    params: {
-        key: this.API_KEY,
-        token: this.userToken,
-    }
+    console.log(process.env.REACT_APP_PRIMARY_ROUTE_KEY);
+  axios.post(`${process.env.REACT_APP_API_URL}/webhook`, 
+    { token: this.userToken },
+    { headers:  { 'token': `${process.env.REACT_APP_PRIMARY_ROUTE_KEY}` }
   })
   .then(({ data }) => {
-    console.log(data);
-    // axios.get(`https://api.trello.com/1/lists/${data[0].id}/cards?`, {
-    //   params: {
-    //     key: this.API_KEY,
-    //     token: this.userToken,
-    //   }
-    // })
-    // .then(({ data }) => {
-    //   data.map((card) => {
-    //     console.log(card.name);
-    //   });
-    // })
-    axios.post('/test/token', {
-      token: this.userToken
-    })
-    .then(({ data }) => {
-      alert(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    alert(data);
+  })
+  .catch((err) => {
+    console.log(err);
   });
 }
 

@@ -1,13 +1,18 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 require('dotenv').config({ path: './config/.env' });
 const bodyParser = require('body-parser');
-const callbacks = require('./routes/callbacks.js');
+const receivers = require('./routes/receivers');
+const { basicRouteAuth } = require('./routes/middleware');
+const webhooks = require('./routes/webhooks');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
-
-app.use(callbacks);
+app.use(receivers);
+app.use(basicRouteAuth);
+app.use(webhooks);
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use(express.static(path.join(__dirname, '..', 'public')));

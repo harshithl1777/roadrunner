@@ -25,7 +25,7 @@
     "heroku-postbuild": "npm install && npm run build",
     "client": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "dev": "concurrently \"cd server && npm run dev\" \"npm run client\"",
     "server": "cd server && npm run dev"
@@ -50,6 +50,7 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^6.0.0"
+    "concurrently": "^6.0.0",
+    "jest": "^26.6.0"
   }
 }
