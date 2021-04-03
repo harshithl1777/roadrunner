@@ -9,6 +9,7 @@ class App extends Component {
     window.Trello.authorize({
       type: 'popup',
       name: 'Roadrunner',
+      persist: false,
       scope: {
         read: 'true',
         write: 'true' },
@@ -18,30 +19,34 @@ class App extends Component {
     });
   }
 
-authSuccess = () => {
-  this.userToken = window.Trello.token();
-    console.log(process.env.REACT_APP_PRIMARY_ROUTE_KEY);
-  axios.post(`${process.env.REACT_APP_API_URL}/webhook`, 
-    { token: this.userToken },
-    { headers:  { 'token': `${process.env.REACT_APP_PRIMARY_ROUTE_KEY}` }
-  })
-  .then(({ data }) => {
-    alert(data);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-}
+  authSuccess = () => {
+    this.userToken = window.Trello.token();
+    console.log(this.userToken);
+  }
 
-authFailure = () => {
-  console.log('Failed');
-}
+  authFailure = () => {
+    console.log('Failed');
+  }
 
+  getLists = () => {
+    axios.get(`https://api.trello.com/1/boards/9khsMGic/cards`, {
+        params: {
+            id: '9khsMGic',
+            key: process.env.REACT_APP_TRELLO_API_KEY,
+            token: this.userToken,
+        }
+    })
+    .then(({ data }) => {
+        console.log(data);
+    })
+    .catch(err => console.log(err));
+  }
 
   render() {
     return (
       <div className="App">
         <button onClick={this.authenticateUser}>Authenticate User</button>
+        <button onClick={this.getLists}>Get Lists</button>
       </div>
     );
   }

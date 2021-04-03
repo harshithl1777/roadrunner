@@ -2,7 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const app = module.exports = express();
 
-app.post('/webhooks/new', ({ body }, res) => {
+app.post('/webhook/new', ({ body }, res) => {
+    console.log('Received webhook creation request');
     axios.post('https://api.trello.com/1/webhooks', {
         key: process.env.TRELLO_API_KEY,
         token: body.token,
