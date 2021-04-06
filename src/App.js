@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   getLists = () => {
-    axios.get(`https://api.trello.com/1/boards/9khsMGic/cards`, {
+    axios.get(`https://api.trello.com/1/boards/9khsMGic/lists`, {
         params: {
             id: '9khsMGic',
             key: process.env.REACT_APP_TRELLO_API_KEY,
