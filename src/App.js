@@ -28,16 +28,17 @@ class App extends Component {
     console.log('Failed');
   }
 
+
   getLists = () => {
-    axios.get(`https://api.trello.com/1/boards/9khsMGic/lists`, {
+    axios.get(`https://api.trello.com/1/lists/600f186d86b7d8428cfded76/cards`, {
         params: {
-            id: '9khsMGic',
+            id: '600f186d86b7d8428cfded76',
             key: process.env.REACT_APP_TRELLO_API_KEY,
             token: this.userToken,
         }
     })
     .then(({ data }) => {
-        console.log(data);
+        data.map(card => console.log(card.labels));
     })
     .catch(err => console.log(err));
   }

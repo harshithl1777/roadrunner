@@ -1,5 +1,5 @@
-const { gatherList } = require('../services/helpers/trello');
-const { removeUnwanted, processValues } = require('../services/helpers/data_processor');
+const { gatherList } = require('../helpers/trello');
+const { removeUnwanted, processValues } = require('../helpers/data_processor');
 
 const webhookReceiver = ({ action }) => {
     switch(action.data.list) {
@@ -16,4 +16,4 @@ const webhookReceiver = ({ action }) => {
 
 module.exports = {
     webhookReceiver,
-};
+}
