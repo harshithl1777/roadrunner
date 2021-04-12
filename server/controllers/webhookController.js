@@ -1,4 +1,4 @@
-const { gatherList } = require('../helpers/trello');
+const { gatherList } = require('../helpers/trelloRequests');
 const { removeUnwanted, processValues } = require('../helpers/data_processor');
 
 const webhookReceiver = ({ action }) => {

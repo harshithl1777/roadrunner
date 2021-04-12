@@ -1,3 +1,4 @@
+// Middleware for all CRUD routes from client side to ensure primary auth
 const basicRouteAuth = (req, res, next) => {
     try {
         if (req.header('token') !== process.env.PRIMARY_ROUTE_KEY) {
