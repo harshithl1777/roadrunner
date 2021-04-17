@@ -80,10 +80,8 @@ const createResource = (data) => {
     });
 }
 
-module.exports = {
-    removeUnwanted,
-    formatName,
-    formatDesc,
-    formatLabels,
-    createResource,
+const performFullFormat = (data) => {
+    return createResource(formatLabels(formatDesc(formatName(removeUnwanted(data)))));
 }
+
+module.exports = performFullFormat;

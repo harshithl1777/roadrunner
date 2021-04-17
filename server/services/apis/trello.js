@@ -15,6 +15,20 @@ const gatherList = (listID) => {
     .catch(err => console.log(err));
 }
 
+const createWebhook = (token, modelID) => {
+    axios.post('https://api.trello.com/1/webhooks', {
+        key: process.env.TRELLO_API_KEY,
+        token,
+        description: 'test webhook 1',
+        callbackURL: `${process.env.API_URL}/api/webhooks`,
+        idModel: modelID,
+    })
+    .then(() => {
+        res.status(201).send('Success');
+    })
+    .catch(err => console.log(err));
+}
+
 module.exports = {
     gatherList,
 };

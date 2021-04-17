@@ -3,16 +3,20 @@ const path = require('path');
 const cors = require('cors');
 require('dotenv').config({ path: './config/.env' });
 const bodyParser = require('body-parser');
-const receivers = require('./routes/receivers');
-const { basicRouteAuth } = require('./routes/middleware');
 const webhooks = require('./routes/webhooks');
+const googleAuth = require('./routes/googleAuth');
+const userAuth = require('./routes/userAuth');
+const clientMiddleware = require('./routes/middleware/client');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(receivers);
-app.use(basicRouteAuth);
+app.use(googleAuth);
 app.use(webhooks);
+app.use(clientMiddleware);
+app.use(userAuth);
+
+
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use(express.static(path.join(__dirname, '..', 'public')));
