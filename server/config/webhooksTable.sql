@@ -1,0 +1,1 @@
+CREATE TABLE webhooks ( id VARCHAR, name VARCHAR, description VARCHAR, listid VARCHAR, listname VARCHAR, sheetid VARCHAR, tabname VARCHAR, datecreated VARCHAR, timecreated VARCHAR);

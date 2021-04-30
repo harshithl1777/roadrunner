@@ -11,12 +11,12 @@ import Sidebar from '../components/Sidebar/Sidebar';
 
 const App = () => {
     const firebaseConfig = {
-        apiKey: "AIzaSyAw23zRo_wvHfGQ0SR63nUQOwvr3AZQD9E",
-        authDomain: "roadrunner-web.firebaseapp.com",
-        projectId: "roadrunner-web",
-        messagingSenderId: "551216557727",
-        appId: "1:551216557727:web:bf6e8c67c668ee2800fcaa",
-        measurementId: "G-FEMQK0Y44T"
+        apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+        authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+        messagingSenderId: process.env.REACT_APP_FIREBASE_MESSENGER_ID,
+        appId: process.env.REACT_APP_FIREBASE_APP_ID,
+        measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT
     };
       // Initialize Firebase
     firebase.initializeApp(firebaseConfig);

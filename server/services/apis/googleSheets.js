@@ -4,7 +4,7 @@ const { retrieveTokens } = require('../../models/users');
 const oAuthClient = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    'http://localhost:3000',
+    'https://roadrunner.herokuapp.com',
 );
 
 const prepareSpreadsheet = async (id, tab, email) => {

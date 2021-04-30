@@ -4,7 +4,7 @@ const { google } = require('googleapis');
 const oAuthClient = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    'http://localhost:5000/api/oauth/google/code',
+    'https://roadrunner.herokuapp.com/api/oauth/google/code',
 );
 
 // returns auth URL to client side for user verify prompt by Google
