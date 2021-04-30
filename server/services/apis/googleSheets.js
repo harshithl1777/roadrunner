@@ -19,7 +19,7 @@ const prepareSpreadsheet = async (id, tab, email) => {
           "range": `${tab}!A1:L1`,
           "majorDimension": "ROWS",
           "values": [
-            ['Card Name', 'Package name', 'Card Name', 'Category', 'Tier', 'Geo', 'Submitted by', 'CPI', 'Branding', 'CPC', 'Live']
+            ['Card Name', 'Package name', 'Card Name', 'Category', 'Tier', 'Geo', 'Submitted by', 'Game.tv', 'CPI', 'Branding', 'CPC', 'Live']
           ]
         },
         key: process.env.GOOGLE_API_KEY

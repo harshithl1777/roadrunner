@@ -11,7 +11,8 @@ app.post('/api/webhooks', (req, res) => {
     .then(async (tokens) => {
         try {
             const id = await createWebhookTrello(tokens.trellotoken, req.body.modelID);
-            await prepareSpreadsheet(req.body.webhookData.sheetid, req.body.webhookData.tabname, 'admin@bluestacks.com');
+            await prepareSpreadsheet(req.body.webhookData.sheetid, req.body.webhookData.tabname, 'admin@bluestacks.com')
+            .then
             createWebhook(req.body.webhookData, id)
                 .then((dbRes) => {
                     if (dbRes) res.status(201).send({ req: 'success' });
