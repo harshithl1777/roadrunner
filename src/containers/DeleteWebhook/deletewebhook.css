@@ -95,6 +95,8 @@
     border: 1px solid #D73535;
   }
 
+
+
   .delete-webhook-confirm {
     width: 435px;
     height: 35px;
@@ -110,6 +112,10 @@
     font-size: 11px;
     line-height: 13px;
     color: #D73535;
+  }
+
+  .delete-webhook-confirm:not(:placeholder-shown) {
+    border: 1px solid #D73535;
   }
 
   .delete-webhook-confirm:focus {

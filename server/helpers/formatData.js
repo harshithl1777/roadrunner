@@ -10,12 +10,21 @@ const removeUnwanted = (data) => {
 
 const formatName = (data) => {
     return data.map(card => {
-        const name = card.name.slice(0, card.name.search('Tier')-3);
-        card.tier = card.name.slice(card.name.search('Tier'), card.name.search('Tier')+6).toUpperCase();
-        card.geo = card.name.slice(card.name.search('Tier')+9).toUpperCase();
-        card.name = name;
-        card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No Data';
-        return card;
+        if (card.name.includes('Tier')) {
+            const name = card.name.slice(0, card.name.search('Tier')-3);
+            card.tier = card.name.slice(card.name.search('Tier'), card.name.search('Tier')+6).toUpperCase();
+            card.geo = card.name.slice(card.name.search('Tier')+9).toUpperCase();
+            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No Data';
+            card.name = name;
+            return card;
+        } else {
+            const name = card.name.slice(0, card.name.search('-')-1);
+            card.tier = 'No Data';
+            card.geo = card.name.slice(card.name.search('-')+2).toUpperCase();
+            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No Data';
+            card.name = name;
+            return card;
+        }
     });
 }
 
