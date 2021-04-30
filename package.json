@@ -46,6 +46,7 @@
     "server": "cd server && npm run dev",
     "launch": "npm run build && cd server && npm start"
   },
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",
