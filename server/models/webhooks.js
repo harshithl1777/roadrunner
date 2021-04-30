@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 
-const pool = (false) 
+const pool = (process.env.NODE_ENV === 'production') 
     ? new Pool({ connectionString: process.env.DATABASE_URL })
     : new Pool({ host: 'localhost', user: 'postgres', database: 'roadrunner', password: process.env.LOCAL_PG_PW, port: 5432 });
 
