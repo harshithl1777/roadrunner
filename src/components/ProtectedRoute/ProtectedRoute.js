@@ -1,14 +1,12 @@
-import React from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-    const isLoggedIn = () => {
-        // Contact server to check if user is logged in
-        localStorage.setItem('roadrunner')
-    }
 
     return (
-        <Route {...rest} render={(props) => ()} />
+        <Route {...rest} render={(props) => (
+            (window.localStorage.getItem('roadrunnerUserIsAuthenticated')) ? <Component {...props} /> : <Redirect to='/login' />
+        )} />
     );
 }
 

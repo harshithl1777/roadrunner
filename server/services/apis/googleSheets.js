@@ -1,23 +1,57 @@
 const { google } = require('googleapis');
+const { retrieveTokens } = require('../../models/users');
 
 const oAuthClient = new google.auth.OAuth2(
-    '551216557727-n4bq3gejg73h559gng0o8m8g6skjhq6m.apps.googleusercontent.com',
-    'AZuQ2aWqw9iS88sgFp47MRXV',
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
     'http://localhost:3000',
 );
 
-oAuthClient.setCredentials({ access_token: 'ya29.a0AfH6SMCl_D9TLVxxvuS6ufLM073cFQBYJ65zK16Pg_fszJkM_Y4JGXYbDelJ_4WDF5XlWQ6gi2ElvlNh245NsQAtqyK40hxDi5ah6BYvd_UC3qIPsI1EodboLr8vPmOruCnRYtbrdZNLDcVcT_OOvZPFmT6m' });
-const sheets = google.sheets({ version: 'v4', oAuthClient });
-  sheets.spreadsheets.values.update({
-    spreadsheetId: '1opvJZ2yqfWgVr5ol1NXkvhn7Y4RKon2xPhemMbQprwA',
-    range: 'Sheet1!A1:B2',
-    resource: [['Testing', 'Another test'], ['Row 2', 'Row 2 2!']],
-    key: '1B44HkvVZ0_0fn0-VRritSgQR6jfY6sJXTDLjmVjEX9o'
-  }, (err, res) => {
-    if (err) {
-      return console.log('The API returned an error: ' + err);
-    } else {
-      console.log('Data written to Spreadsheet');
-    }
-});
+const prepareSpreadsheet = async (id, tab, email) => {
+  const { gapirefresh } = await retrieveTokens(email);
+  oAuthClient.setCredentials({ refresh_token: gapirefresh });
+  const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
+    sheets.spreadsheets.values.update({
+        spreadsheetId: id,
+        range: `${tab}!A1:L1`,
+        valueInputOption: 'RAW',
+        resource: {
+          "range": `${tab}!A1:L1`,
+          "majorDimension": "ROWS",
+          "values": [
+            ['Card Name', 'Package name', 'Card Name', 'Category', 'Tier', 'Geo', 'Submitted by', 'CPI', 'Branding', 'CPC', 'Live']
+          ]
+        },
+        key: process.env.GOOGLE_API_KEY
+      }, (err, res) => {
+        if (err) throw err;
+        return true;
+    });
+}
+
+const updateSpreadsheet = async (id, tab, email, resource) => {
+  const { gapirefresh } = await retrieveTokens(email);
+  oAuthClient.setCredentials({ refresh_token: gapirefresh });
+  const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
+    sheets.spreadsheets.values.update({
+        spreadsheetId: id,
+        range: `${tab}!A2:L${resource.length+1}`,
+        valueInputOption: 'RAW',
+        resource: {
+          "range": `${tab}!A2:L${resource.length+1}`,
+          "majorDimension": "ROWS",
+          "values": resource
+        },
+        key: process.env.GOOGLE_API_KEY
+      }, (err, res) => {
+        if (err) throw err;
+        return true;
+    });
+}
+
+module.exports = {
+  prepareSpreadsheet,
+  updateSpreadsheet
+}
+
 

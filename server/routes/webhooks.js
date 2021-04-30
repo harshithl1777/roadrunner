@@ -1,15 +1,61 @@
 const express = require('express');
-const axios = require('axios');
 const app = module.exports = express();
-const { triggerController } = require('../services/receivers');
-const webhooksController = require('../controllers/webhooks');
-const { authorizeExternalAPI, authorizeClient } = require('./middleware');
+const { createWebhookTrello, deleteWebhooksTrello } = require('../services/apis/trello');
+const { prepareSpreadsheet } = require('../services/apis/googleSheets');
+const { retrieveAllWebhooks, createWebhook, deleteWebhooks } = require('../models/webhooks');
+const { retrieveTokens } = require('../models/users');
 
 // POST request to create new webhook
 app.post('/api/webhooks', (req, res) => {
-    console.log('Received webhook creation request');
+    retrieveTokens(req.body.email)
+    .then(async (tokens) => {
+        try {
+            const id = await createWebhookTrello(tokens.trellotoken, req.body.modelID);
+            await prepareSpreadsheet(req.body.webhookData.sheetid, req.body.webhookData.tabname, 'admin@bluestacks.com');
+            createWebhook(req.body.webhookData, id)
+                .then((dbRes) => {
+                    if (dbRes) res.status(201).send({ req: 'success' });
+                })
+                .catch(dbErr => {
+                    console.log(dbErr);
+                    res.status(500).send({ req: 'fail', msg: dbErr })
+                });
+        } catch(err) {
+            console.log(err);
+            res.status(500).send({ req: 'fail', msg: err });
+        }
+    })
 });
 
+// GET request to retrieve all existing webhooks
 app.get('/api/webhooks', (req, res) => {
-    res.status(200).send('Webhook data');
+    retrieveAllWebhooks()
+        .then(data => res.status(200).send({ req: 'success', data }))
+        .catch(err => res.status(500).send({ req: 'fail', msg: err }));
+});
+
+
+// POST request to delete array of webhooks with ids
+app.delete('/api/webhooks', async (req, res) => {
+    const tokens = await retrieveTokens(req.body.email);
+    console.log(req.body.email, req.body.ids);
+    console.log(tokens);
+    deleteWebhooksTrello(req.body.ids, tokens.trellotoken)
+        .then(trelloResult => {
+            console.log(trelloResult);
+            deleteWebhooks(trelloResult[0])
+                .then(dbResult => {
+                    console.log(dbResult);
+                    if (dbResult && trelloResult[0].length === req.body.ids.length) res.status(200).send({ req: 'success' });
+                    else if (dbResult && trelloResult[0].length !== req.body.ids.length) res.status(500).send({ req: 'fail', msg: 'No webhooks were deleted. Deletion fully failed.' });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).send({ req: 'fail', msg: err })
+                });
+        })
+        .catch(err => { 
+            console.log(err);
+            res.status(500).send({ req: 'fail', msg: err });
+        });
 });

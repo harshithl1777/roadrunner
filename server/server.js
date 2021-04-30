@@ -6,24 +6,22 @@ const bodyParser = require('body-parser');
 const webhooks = require('./routes/webhooks');
 const googleAuth = require('./routes/googleAuth');
 const userAuth = require('./routes/userAuth');
-const clientMiddleware = require('./routes/middleware/client');
+const receivers = require('./routes/receivers');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(googleAuth);
 app.use(webhooks);
-app.use(clientMiddleware);
+app.use(receivers);
 app.use(userAuth);
-
-
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// app.use((req, res, next) => {
-//     res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
-// });
+app.use((req, res, next) => {
+    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+});
 
 const port = 5000 || process.env.PORT;
 

@@ -2,12 +2,12 @@ const { google } = require('googleapis');
 
 // OAuth client initialization
 const oAuthClient = new google.auth.OAuth2(
-    '551216557727-n4bq3gejg73h559gng0o8m8g6skjhq6m.apps.googleusercontent.com',
-    'AZuQ2aWqw9iS88sgFp47MRXV',
-    'http://localhost:3000',
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    'http://localhost:5000/api/oauth/google/code',
 );
 
-// returns auth URL to client sidefor user verify prompt by Google
+// returns auth URL to client side for user verify prompt by Google
 const acquireAuthURL = () => {
     return oAuthClient.generateAuthUrl({ 
         access_type: 'offline', 
@@ -20,7 +20,7 @@ const exchangeToken = async (code) => {
     const { tokens } = await oAuthClient.getToken(code);
     return tokens;
 }
- 
+
 module.exports = {
     acquireAuthURL,
     exchangeToken

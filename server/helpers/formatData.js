@@ -14,6 +14,7 @@ const formatName = (data) => {
         card.tier = card.name.slice(card.name.search('Tier'), card.name.search('Tier')+6).toUpperCase();
         card.geo = card.name.slice(card.name.search('Tier')+9).toUpperCase();
         card.name = name;
+        card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No Data';
         return card;
     });
 }
@@ -21,11 +22,18 @@ const formatName = (data) => {
 const formatDesc = (data) => {
     return data.map(card => {
         const desc = card.desc.split('\n');
-        card.pkgName = desc[1].slice(desc[1].search(':')+2);
-        card.developer = desc[6].slice(desc[6].search(':')+2);
-        card.submittedBy = capitalize(desc[5].slice(desc[5].search(':')+2, desc[5].search('@')));
-        card.cpi = capitalize(desc[2].slice(desc[2].search(':')+2));
-        card.category = desc[7].slice(desc[7].search(':')+2);
+        card.pkgName = 'No Data';
+        card.developer = 'No Data';
+        card.submittedBy = 'No Data';
+        card.category = 'No Data';
+        desc.forEach((item1) => {
+            const itemCopy = item1.toLowerCase().replace(/\s+/g, '');
+            if (itemCopy.includes('packagename')) card.pkgName = item1.slice(item1.search(':')+2);
+            else if (itemCopy.includes('developer')) card.developer = item1.slice(item1.search(':')+2);
+            else if (itemCopy.includes('broughttousby')) card.submittedBy = capitalize(item1.slice(item1.search(':')+2, item1.search('@')));
+            else if (itemCopy.includes('cpideal') && card.cpi === 'No Data') card.cpi = capitalize(item1.slice(item1.search(':')+2));
+            else if (itemCopy.includes('category')) card.category = item1.slice(item1.search(':')+2);
+        });
         return card;
     });
 }
@@ -80,8 +88,8 @@ const createResource = (data) => {
     });
 }
 
-const performFullFormat = (data) => {
+const performFullFormatting = (data) => {
     return createResource(formatLabels(formatDesc(formatName(removeUnwanted(data)))));
 }
 
-module.exports = performFullFormat;
+module.exports = performFullFormatting;
