@@ -15,7 +15,9 @@ const asyncForEach = async (array, callback) => {
 }
 
 // HEAD Request for Trello to verify creation of new webhook
-app.head('/api/receiver', (res) => res.status(200).send('Gateway open'));
+app.head('/api/receiver', (req, res) => {
+    res.status(200).send('Gateway open')
+});
 
 // POST Request that will receive Trello webhook triggers
 app.post('/api/receiver', async ({ body }, res) =>  {
