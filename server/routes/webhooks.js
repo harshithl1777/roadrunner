@@ -31,7 +31,7 @@ app.post('/api/webhooks', (req, res) => {
 app.get('/api/webhooks', (req, res) => {
     retrieveAllWebhooks()
         .then(data => res.status(200).send({ req: 'success', data }))
-        .catch(err => res.status(500).send({ req: 'fail', msg: err }));
+        .catch(err => res.status(500).send({ req: 'fail', msg: err, url: process.env.DATABASE_URL }));
 });
 
 
