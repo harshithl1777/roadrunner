@@ -36,9 +36,10 @@ const formatDesc = (data) => {
         card.submittedBy = 'No Data';
         card.category = 'No Data';
         desc.forEach((item1) => {
+            console.log(item1);
             const itemCopy = item1.toLowerCase().replace(/\s+/g, '');
             if (itemCopy.includes('packagename')) card.pkgName = item1.slice(item1.search(':')+2);
-            else if (itemCopy.includes('developer')) card.developer = item1.slice(item1.search(':')+2);
+            else if (itemCopy.includes('developer:')) card.developer = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('broughttousby')) card.submittedBy = capitalize(item1.slice(item1.search(':')+2, item1.search('@')));
             else if (itemCopy.includes('cpideal') && card.cpi === 'No Data') card.cpi = capitalize(item1.slice(item1.search(':')+2));
             else if (itemCopy.includes('category')) card.category = item1.slice(item1.search(':')+2);

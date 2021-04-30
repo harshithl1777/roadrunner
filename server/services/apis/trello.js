@@ -4,7 +4,7 @@ const gatherCards = async (listID, token) => {
     const { data } = await axios.get(`https://api.trello.com/1/lists/${listID}/cards`, {
         params: {
             id: listID,
-            key: process.env.TRELLO_API_KEY,
+            key: 'e1b23f1d39ff82efd37ac98ef2d87ef9',
             token,
         }
     });
