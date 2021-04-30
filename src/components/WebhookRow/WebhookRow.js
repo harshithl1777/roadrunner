@@ -34,7 +34,7 @@ const WebhookRow = ({ data, onSelect }) => {
                     </div>
                 </div>
                 <div className='row-id'>
-                    <RowTag text={(data.sheet.id.length > 30) ? data.sheet.id.substring(0, 22)+'...' : data.sheet.id} color='#1968DD' bg='rgba(25, 104, 221, 0.15)' />
+                    <RowTag text={(data.sheet.id.length > 21) ? data.sheet.id.substring(0, 22)+'...' : data.sheet.id} color='#1968DD' bg='rgba(25, 104, 221, 0.15)' />
                 </div>
                 <div className='row-list'>
                     <RowTag text={(data.list.name.length > 30) ? data.list.name.substring(0, 22)+'...' : data.list.name} color='#F65F0A' bg='rgba(247, 95, 10, 0.15)' />
