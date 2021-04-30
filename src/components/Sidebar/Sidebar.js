@@ -63,8 +63,8 @@ const Sidebar = () => {
                         <div className='sidebar-user'>
                             <img src={profilePic} alt='profile' className='sidebar-user-photo' />
                             <div className='sidebar-user-content'>
-                                <div className='sidebar-user-name'>Bluestacks Admin</div>
-                                <div className='sidebar-user-email'>admin@bluestacks.com</div>
+                                <div className='sidebar-user-name'>Bluestacks Master</div>
+                                <div className='sidebar-user-email'>bluestacks-master</div>
                             </div>
                             <div onClick={logoutUser} className='sidebar-logout'><img className='sidebar-logout-icon' src={logoutIcon} alt='logout' /></div>
                         </div>

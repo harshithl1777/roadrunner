@@ -49,7 +49,7 @@ const formatDesc = (data) => {
 
 const formatLabels = (data) => {
     return data.map((card) => {
-        let cpc = 'No'; let gameTV = 'No'; let branding = 'No'; let status = 'No Data'; let cpi = card.cpi;
+        let cpc = 'No'; let gameTV = 'No'; let branding = 'No'; let status = 'Not Live'; let cpi = card.cpi;
         card.labels.forEach(({ name })=> {
             switch(name) {
                 case 'Game.tv':

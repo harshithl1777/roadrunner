@@ -22,7 +22,7 @@ const DeleteWebhook = ({ cancel, toDelete, render, rerender }) => {
         toDelete.forEach((hook) => {
             ids.push(hook.id);
         });
-        deleteWebhooks('admin@bluestacks.com', ids)
+        deleteWebhooks('bluestacks-master', ids)
         .then((status) => {
             if (status === 200) {
                 setTimeout(() => {

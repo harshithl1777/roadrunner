@@ -25,7 +25,7 @@ const Onboarding = ({ cancel }) => {
 
     useEffect(() => {
             if (oAuthExists[0] === null && oAuthExists[1] === null) {
-                getTokens('admin@bluestacks.com')
+                getTokens('bluestacks-master')
                 .then(data => {
                     if (data.gapiaccess && data.gapirefresh && !data.trellotoken) setOAuthExists([true, false]);
                     else if (!data.gapiaccess && !data.gapirefresh && data.trellotoken) setOAuthExists([false, true]);
@@ -47,7 +47,7 @@ const Onboarding = ({ cancel }) => {
     }
 
     const trelloSuccess = () => {
-        sendTrelloToken('admin@bluestacks.com', window.Trello.token())
+        sendTrelloToken('bluestacks-master', window.Trello.token())
         .then(status => {
             if (status === 201) window.location.reload();
         })

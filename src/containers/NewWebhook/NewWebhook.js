@@ -60,7 +60,7 @@ const NewWebhook = ({ cancel, render, rerender, existing }) => {
                 createWindow.current.style.display = 'none';
                 loadingWindow.current.style.display = 'block';
                 const webhookData = structureData();
-                createWebhook('admin@bluestacks.com', list.value, webhookData)
+                createWebhook('bluestacks-master', list.value, webhookData)
                 .then(res => {
                     if (res === 201) {
                         setTimeout(() => {
@@ -96,7 +96,7 @@ const NewWebhook = ({ cancel, render, rerender, existing }) => {
 
     useEffect(() => {
         const generateOptions = async () => {
-            getTokens('admin@bluestacks.com')
+            getTokens('bluestacks-master')
             .then(async (tokens) => {
                 const { data, err } = await axios.get(`https://api.trello.com/1/boards/9khsMGic/lists`, {
                     params: {

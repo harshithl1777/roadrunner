@@ -32,7 +32,7 @@ const ActiveWebhooks = () => {
 
     const renderOnboarding = () => {
         if (onboardingOpen === null) {
-            getTokens('admin@bluestacks.com')
+            getTokens('bluestacks-master')
             .then(data => {
                 if (!(data.gapiaccess && data.gapirefresh && data.trellotoken)) {
                     setOnboardingOpen(true);

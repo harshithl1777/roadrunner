@@ -42,8 +42,8 @@ const WebhookRow = ({ data, onSelect }) => {
                 <div className='row-creator'>
                     <img src={profilePic} alt='profile' className='row-creator-pic' />
                     <div className='row-details'>
-                        <h2 className='row-creator-name row-header'>Bluestacks Admin</h2>
-                        <h3 className='row-creator-email row-desc'>admin@bluestacks.com</h3>
+                        <h2 className='row-creator-name row-header'>Bluestacks Master</h2>
+                        <h3 className='row-creator-email row-desc'>bluestacks-master</h3>
                     </div>
                 </div>
                 <div className='row-created'>
