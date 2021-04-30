@@ -21,14 +21,14 @@ app.head('/api/receiver', (req, res) => {
 
 // POST Request that will receive Trello webhook triggers
 app.post('/api/receiver', async ({ body }, res) =>  {
-    const { trellotoken } = await retrieveTokens('admin@bluestacks.com');
+    const { trellotoken } = await retrieveTokens('bluestacks-master');
     try {
         switch(body.action.data.listBefore) {
             case undefined:
                 const list = await gatherCards(body.action.data.list.id, trellotoken);
                 const resource = formatData(list);
                 const { sheetid, tabname } = await retrieveSingleWebhook(body.action.data.list.id);
-                await updateSpreadsheet(sheetid, tabname, 'admin@bluestacks.com', resource);
+                await updateSpreadsheet(sheetid, tabname, 'bluestacks-master', resource);
                 res.status(200).send('Received');
                 break
             default:
@@ -37,7 +37,7 @@ app.post('/api/receiver', async ({ body }, res) =>  {
                         const list = await gatherCards(id, trellotoken);
                         const resource = formatData(list);
                         const { sheetid, tabname } = await retrieveSingleWebhook(id);
-                        await updateSpreadsheet(sheetid, tabname, 'admin@bluestacks.com', resource);
+                        await updateSpreadsheet(sheetid, tabname, 'bluestacks-master', resource);
                     }
                 });
                 res.status(200).send('Received');

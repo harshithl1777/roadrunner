@@ -30,7 +30,7 @@ app.get('/api/oauth/google/code', async (req, res) => {
     const code = req.query.code;
     exchangeToken(code)
     .then(tokens => {
-        addGoogleTokens('admin@bluestacks.com', tokens)
+        addGoogleTokens('bluestacks-master', tokens)
         .then((dbRes) => {
             if (dbRes) res.redirect(`${process.env.CLIENT_URL}/app/webhooks`);
         })
