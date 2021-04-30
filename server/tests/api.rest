@@ -48,3 +48,12 @@ POST http://localhost:5000/api/receiver?listID=sample
 
 ###
 HEAD http://49591fa11e40.ngrok.io/api/receiver?listID=5d597ff5bdea837eb5b639a5
+
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "bluestacks-master",
+    "password": "5cMv9cWhKP*NGErQ"
+}

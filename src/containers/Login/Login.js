@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import firebase from "firebase/app";
 import 'firebase/auth';
+import { authenticateUser } from '../../services/api/auth';
 
 import logo from './assets/logo.svg';
 import './login.css';
@@ -10,10 +11,12 @@ const Login = () => {
     const[password, changePassword] = useState('');
 
     const loginClicked = () => {
-        firebase.auth().signInWithEmailAndPassword(username, password)
-        .then(() =>  {
-            window.localStorage.setItem('roadrunnerUserIsAuthenticated', true);
-            window.location.href='/app/webhooks';
+        authenticateUser(username, password)
+        .then((res) =>  {
+            if (res) {
+                window.localStorage.setItem('roadrunnerUserIsAuthenticated', true);
+                window.location.href='/app/webhooks';
+            }
         })
         .catch(({ message }) => alert(message));
     }

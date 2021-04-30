@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import firebase from "firebase/app";
 import 'firebase/auth';
 
-import FeedbackModal from '../FeedbackModal/FeedbackModal';
 import Button from '../Button/Button';
 import logo from './assets/logo.svg';
 import webhooksIcon from './assets/activeHooksLogo.svg';
@@ -13,27 +12,14 @@ import './sidebar.css';
 
 
 const Sidebar = () => {
-    const [feedbackModal, changeFeedbackModal] = useState(false);
 
     const logoutUser = () => {
-        firebase.auth().signOut()
-        .then(() => {
-            window.localStorage.removeItem('roadrunnerUserIsAuthenticated');
-            window.location.href = '/';
-        })
-        .catch(() => {
-            alert('There was a problem when trying to log you out. Try again later.');
-        });
-    }
-
-    const renderModal = () => {
-        return (feedbackModal) ? <FeedbackModal /> : null;
+        window.localStorage.removeItem('roadrunnerUserIsAuthenticated');
+        window.location.href = '/';
     }
 
     return (
         <div className='sidebar-wrap'>
-            {renderModal()}
-            <div className={(feedbackModal) ? 'modal-backdrop' : null}></div>
                 <div className='sidebar'>
                     <div className='sidebar-top'> 
                         <div className='sidebar-logo-wrapper'>

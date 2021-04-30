@@ -3,7 +3,7 @@ const app = module.exports = express();
 const { authenticateUser, retrieveTokens, addTrelloToken } = require('../models/users');
 
 app.post('/api/auth/login', (req, res) => {
-    authenticateUser(req.body.email)
+    authenticateUser(req.body.username)
     .then(data => {
         if (data.length === 0) res.status(401).send({ req: 'fail', msg: 'No such account' });
         else if (data[0].pw === req.body.password) res.sendStatus(200);
