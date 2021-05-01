@@ -18,7 +18,7 @@ const Login = () => {
                 window.location.href='/app/webhooks';
             }
         })
-        .catch(({ message }) => alert(message));
+        .catch(() => alert('Invalid password or this account does not exist. Please check your details and try again.'));
     }
 
     return (
