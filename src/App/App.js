@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import firebase from "firebase/app";
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import GatewayRoute from '../components/GatewayRoute/GatewayRoute';
@@ -10,16 +9,6 @@ import Login from '../containers/Login/Login';
 import Sidebar from '../components/Sidebar/Sidebar';
 
 const App = () => {
-    const firebaseConfig = {
-        apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-        authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-        projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-        messagingSenderId: process.env.REACT_APP_FIREBASE_MESSENGER_ID,
-        appId: process.env.REACT_APP_FIREBASE_APP_ID,
-        measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT
-    };
-      // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
 
     return (
         <BrowserRouter>
