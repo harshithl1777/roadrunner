@@ -14,14 +14,14 @@ const formatName = (data) => {
             const name = card.name.slice(0, card.name.search('Tier')-3);
             card.tier = card.name.slice(card.name.search('Tier'), card.name.search('Tier')+6).toUpperCase();
             card.geo = card.name.slice(card.name.search('Tier')+9).toUpperCase();
-            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No Data';
+            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No';
             card.name = name;
             return card;
         } else {
             const name = card.name.slice(0, card.name.search('-')-1);
             card.tier = 'No Data';
             card.geo = card.name.slice(card.name.search('-')+2).toUpperCase();
-            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No Data';
+            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No';
             card.name = name;
             return card;
         }
@@ -41,7 +41,6 @@ const formatDesc = (data) => {
             if (itemCopy.includes('packagename')) card.pkgName = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('developer:')) card.developer = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('broughttousby')) card.submittedBy = capitalize(item1.slice(item1.search(':')+2, item1.search('@')));
-            else if (itemCopy.includes('cpideal') && card.cpi === 'No Data') card.cpi = capitalize(item1.slice(item1.search(':')+2));
             else if (itemCopy.includes('category')) card.category = item1.slice(item1.search(':')+2);
         });
         return card;
