@@ -67,10 +67,7 @@ const formatLabels = (data) => {
                 case 'CPC':
                     cpc = 'Yes';
                     break
-                case 'CPI':
-                    cpi = 'Yes';
-                    break
-                case 'cpi':
+                case '$$deal':
                     cpi = 'Yes';
                     break
                 default:
