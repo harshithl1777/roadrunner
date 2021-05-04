@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import firebase from "firebase/app";
-import 'firebase/auth';
 
 import Button from '../Button/Button';
 import logo from './assets/logo.svg';

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import firebase from "firebase/app";
-import 'firebase/auth';
 import { authenticateUser } from '../../services/api/auth';
 
 import logo from './assets/logo.svg';
@@ -18,7 +16,7 @@ const Login = () => {
                 window.location.href='/app/webhooks';
             }
         })
-        .catch(({ message }) => alert(message));
+        .catch(() => alert('Invalid password or this account does not exist. Please check your details and try again.'));
     }
 
     return (
