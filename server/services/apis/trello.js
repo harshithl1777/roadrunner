@@ -60,6 +60,7 @@ const gatherLists = async (board) => {
     console.log(data);
 }
 
+
 module.exports = {
     gatherCards,
     createWebhookTrello,

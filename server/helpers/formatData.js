@@ -70,6 +70,9 @@ const formatLabels = (data) => {
                 case '$$deal':
                     cpi = 'Yes';
                     break
+                case '$$ Deal':
+                    cpi = 'Yes';
+                    break
                 default:
             }
         });
