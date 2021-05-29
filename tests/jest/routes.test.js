@@ -6,6 +6,6 @@ test('Addition test', () => {
 });
 
 test('Route test', async () => {
-    const res = await request(app).get('/tests');
+    const res = await request(app).get('/test');
     expect(res.statusCode).toEqual(200);
 });

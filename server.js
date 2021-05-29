@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 
-app.get('/tests', (req, res) => {
+app.get('/test', (req, res) => {
     res.sendStatus(200);
 });
 
