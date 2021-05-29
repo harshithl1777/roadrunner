@@ -14,5 +14,5 @@ test('Query Postgres DB', async () => {
     await pgclient.query('CREATE TABLE students (name VARCHAR)');
     await pgclient.query('INSERT INTO students (name) VALUES ($1)', ['Harshith']);
     const { rows } = await pgclient.query('SELECT name FROM students');
-    expect(rows.length).not.toBeNull();
+    expect(rows[0].name).toBe('Harshith');
 });
