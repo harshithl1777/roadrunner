@@ -6,6 +6,9 @@ app.get('/test', (req, res) => {
     res.sendStatus(200);
 });
 
-app.listen(5000);
+const server = app.listen(5000);
 
-module.exports = app;
+module.exports = {
+    server,
+    app
+};
