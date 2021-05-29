@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+require('./config/sentry');
 require('dotenv').config({ path: '../.env' });
 const bodyParser = require('body-parser');
 const webhooks = require('./routes/webhooks');
@@ -11,10 +12,10 @@ const receivers = require('./routes/receivers');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(googleAuth);
-app.use(webhooks);
-app.use(receivers);
-app.use(userAuth);
+app.use('/api/oauth', googleAuth);
+app.use('/api/webhooks', webhooks);
+app.use('/api/receivers', receivers);
+app.use('/api/auth', userAuth);
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -22,8 +23,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
-
-console.log(process.env);
 
 const port = process.env.PORT || 5000;
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const app = module.exports = express();
+const router = express.Router();
 const { gatherCards } = require('../services/apis/trello');
 const { updateSpreadsheet } = require('../services/apis/googleSheets');
 const formatData = require('../helpers/formatData');
@@ -15,12 +15,12 @@ const asyncForEach = async (array, callback) => {
 }
 
 // HEAD Request for Trello to verify creation of new webhook
-app.head('/api/receiver', (req, res) => {
+router.head('/', (req, res) => {
     res.status(200).send('Gateway open')
 });
 
 // POST Request that will receive Trello webhook triggers
-app.post('/api/receiver', async ({ body }, res) =>  {
+router.post('/', async ({ body }, res) =>  {
     const { trellotoken } = await retrieveTokens('bluestacks-master');
     try {
         switch(body.action.data.listBefore) {

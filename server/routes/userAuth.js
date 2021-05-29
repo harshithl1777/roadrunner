@@ -1,8 +1,8 @@
 const express = require('express');
-const app = module.exports = express();
+const router = express.Router();
 const { authenticateUser, retrieveTokens, addTrelloToken } = require('../models/users');
 
-app.post('/api/auth/login', (req, res) => {
+router.post('/', (req, res) => {
     authenticateUser(req.body.username)
     .then(data => {
         if (data.length === 0) res.status(401).send({ req: 'fail', msg: 'No such account' });
@@ -15,13 +15,13 @@ app.post('/api/auth/login', (req, res) => {
     });
 });
 
-app.post('/api/auth/tokens', (req, res) => {
+router.post('/tokens', (req, res) => {
     retrieveTokens(req.body.email)
     .then(data => res.status(200).send({ req: 'success', data }))
     .catch(err => res.status(500).send({ req: 'fail', msg: err }));
 });
 
-app.post('/api/auth/tokens/trello', (req, res) => {
+router.post('/tokens/trello', (req, res) => {
     addTrelloToken(req.body.email, req.body.token)
     .then(dbRes => { if (dbRes) res.sendStatus(201) })
     .catch(err => res.status(500).send({ req: 'fail', msg: err }));

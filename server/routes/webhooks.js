@@ -1,12 +1,12 @@
 const express = require('express');
-const app = module.exports = express();
+const router = express.Router();
 const { createWebhookTrello, deleteWebhooksTrello } = require('../services/apis/trello');
 const { prepareSpreadsheet } = require('../services/apis/googleSheets');
 const { retrieveAllWebhooks, createWebhook, deleteWebhooks } = require('../models/webhooks');
 const { retrieveTokens } = require('../models/users');
 
 // POST request to create new webhook
-app.post('/api/webhooks', (req, res) => {
+router.post('/', (req, res) => {
     retrieveTokens(req.body.email)
     .then(async (tokens) => {
         try {
@@ -29,7 +29,7 @@ app.post('/api/webhooks', (req, res) => {
 });
 
 // GET request to retrieve all existing webhooks
-app.get('/api/webhooks', (req, res) => {
+router.get('/', (req, res) => {
     retrieveAllWebhooks()
         .then(data => res.status(200).send({ req: 'success', data }))
         .catch(err => res.status(500).send({ req: 'fail', msg: err, url: process.env.DATABASE_URL }));
@@ -37,7 +37,7 @@ app.get('/api/webhooks', (req, res) => {
 
 
 // POST request to delete array of webhooks with ids
-app.delete('/api/webhooks', async (req, res) => {
+router.delete('/', async (req, res) => {
     const tokens = await retrieveTokens(req.body.email);
     console.log(req.body.email, req.body.ids);
     console.log(tokens);
@@ -60,3 +60,5 @@ app.delete('/api/webhooks', async (req, res) => {
             res.status(500).send({ req: 'fail', msg: err });
         });
 });
+
+module.exports = router;

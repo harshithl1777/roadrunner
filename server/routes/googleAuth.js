@@ -1,15 +1,15 @@
 const express = require('express');
-const app = module.exports = express();
+const router = express.Router();
 const { acquireAuthURL, exchangeToken } = require('../services/apis/googleAuth');
 const { addGoogleTokens } = require('../models/users');
 
  
-app.get('/api/oauth/google', (req, res) => {
+router.get('/google/url', (req, res) => {
     const authURL = acquireAuthURL();
     res.status(200).send({ authURL });
 });
 
-app.post('/api/oauth/google', async (req, res) => {
+router.post('/google', async (req, res) => {
     const code = req.body.code.replace('%2F', '/');
     console.log(code);
     exchangeToken(code)
@@ -26,7 +26,7 @@ app.post('/api/oauth/google', async (req, res) => {
     })
 });
 
-app.get('/api/oauth/google/code', async (req, res) => {
+router.get('/google/code', async (req, res) => {
     const code = req.query.code;
     exchangeToken(code)
     .then(tokens => {
@@ -38,3 +38,5 @@ app.get('/api/oauth/google/code', async (req, res) => {
     })
     .catch(err => console.log(err));
 });
+
+module.exports = router;
