@@ -5,7 +5,7 @@ test('Addition test', () => {
     expect(1+1).toBe(2);
 });
 
-test('Route test', () => {
+test('Route test', async () => {
     const res = await request(app).get('/test');
     expect(res.statusCode).toEqual(200);
 });
