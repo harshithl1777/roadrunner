@@ -1,9 +1,0 @@
-* {
-    margin: 0 auto;
-}
-
-.content {
-    background: rgb(65,130,227);
-    background: linear-gradient(180deg, rgba(65,130,227,1) 0%, rgba(0,79,198,1) 100%);
-    height: 625px;
-}
