@@ -3,29 +3,39 @@ const path = require('path');
 const cors = require('cors');
 require('./config/sentry');
 require('dotenv').config({ path: '../.env' });
-const bodyParser = require('body-parser');
-const webhooks = require('./routes/webhooks');
-const googleAuth = require('./routes/googleAuth');
-const userAuth = require('./routes/userAuth');
-const receivers = require('./routes/receivers');
+const webhookRouter = require('./routes/webhooks');
+const oauthRouter = require('./routes/oauth');
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/users');
+const serviceRouter = require('./routes/receivers');
+const middleware = require('./routes/middleware');
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
-app.use('/api/oauth', googleAuth);
-app.use('/api/webhooks', webhooks);
-app.use('/api/receivers', receivers);
-app.use('/api/auth', userAuth);
+app.use(express.json());
+app.use('/api/oauth', oauthRouter);
+app.use('/api/webhooks', webhookRouter);
+app.use('/api/services', serviceRouter);
+app.use('/api/users', userRouter);
+app.use(middleware);
+app.use('/api/auth', authRouter);
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+// app.use((req, res, next) => {
+//     res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+// });
+
+app.get('/test', (req, res) => {
+    res.send({ success: true });
 });
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
-    console.log(`Express listening on port ${port}`);
-});
+const httpServer = app.listen(port, () => console.log(`Listening on port ${port}`));
+
+module.exports = {
+    app,
+    httpServer
+}

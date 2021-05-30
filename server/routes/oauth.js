@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { acquireAuthURL, exchangeToken } = require('../services/apis/googleAuth');
+const { acquireAuthURL, exchangeToken } = require('../services/apis/googleOAuth');
 const { addGoogleTokens } = require('../models/users');
 
  

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { gatherCards } = require('../services/apis/trello');
 const { updateSpreadsheet } = require('../services/apis/googleSheets');
-const formatData = require('../helpers/formatData');
+const formatData = require('../services/utils/dataFormatter');
 const { retrieveTokens } = require('../models/users');
 const { checkWebhookExists, retrieveSingleWebhook } = require('../models/webhooks');
 const { errorDetected } = require('../services/apis/mailer');
@@ -48,3 +48,5 @@ router.post('/', async ({ body }, res) =>  {
         await errorDetected(err);
     }
 });
+
+module.exports = router;

@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "roadrunner",
+            "name": "roadrunner-dev",
+            "username": "postgres",
+            "password": "Saisai8l@"
+        }
+    ]
+}
