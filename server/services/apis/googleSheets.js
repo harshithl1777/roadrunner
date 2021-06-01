@@ -27,6 +27,7 @@ const prepareSpreadsheet = async (id, tab, email) => {
           });
       return true;
     } catch(err) {
+      await removeGoogleTokens('bluestacks-master');
       console.log(err);
       return false;
     }
@@ -50,12 +51,10 @@ const updateSpreadsheet = async (id, tab, email, resource) => {
         });
     return true;
   } catch(err) {
+    await removeGoogleTokens('bluestacks-master');
     console.log(err);
     return false;
   }
-    
-
-
 }
 
 module.exports = {
