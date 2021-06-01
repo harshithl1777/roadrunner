@@ -12,7 +12,7 @@ app.post('/api/webhooks', (req, res) => {
         try {
             const id = await createWebhookTrello(tokens.trellotoken, req.body.modelID);
             const response = await prepareSpreadsheet(req.body.webhookData.sheetid, req.body.webhookData.tabname, 'bluestacks-master');
-            console.log(response);
+            console.log('Response:', response);
             if (!response) {
                 console.log('failed here');
                 return res.status(500).send({ req: 'fail' });

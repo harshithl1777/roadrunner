@@ -8,7 +8,7 @@ const oAuthClient = new google.auth.OAuth2(
 );
 
 const prepareSpreadsheet = async (id, tab, email) => {
-    let error = false;
+    var error = false;
     const { gapirefresh } = await retrieveTokens(email);
     oAuthClient.setCredentials({ refresh_token: gapirefresh });
     const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
@@ -25,7 +25,7 @@ const prepareSpreadsheet = async (id, tab, email) => {
           },
           key: process.env.GOOGLE_API_KEY
         }, async (err, res) => {
-            console.log(err);
+            console.log('Google error:', err);
             if (err) {
               await removeGoogleTokens('bluestacks-master');
               error = false;
@@ -33,7 +33,7 @@ const prepareSpreadsheet = async (id, tab, email) => {
               error = true;
             }
       });
-    console.log(error);
+    console.log('Defined:', error);
     return error;
 }
 
