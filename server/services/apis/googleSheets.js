@@ -8,41 +8,36 @@ const oAuthClient = new google.auth.OAuth2(
 );
 
 const prepareSpreadsheet = async (id, tab, email) => {
-    var error = false;
-    const { gapirefresh } = await retrieveTokens(email);
-    oAuthClient.setCredentials({ refresh_token: gapirefresh });
-    const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
-      sheets.spreadsheets.values.update({
-          spreadsheetId: id,
-          range: `${tab}!A1:L1`,
-          valueInputOption: 'RAW',
-          resource: {
-            "range": `${tab}!A1:L1`,
-            "majorDimension": "ROWS",
-            "values": [
-              ['Card Name', 'Package name', 'Developer', 'Category', 'Tier', 'Geo', 'Submitted by', 'Game.tv', 'CPI', 'Branding', 'CPC', 'Live']
-            ]
-          },
-          key: process.env.GOOGLE_API_KEY
-        }, async (err, res) => {
-            console.log('Google error:', err);
-            if (err) {
-              await removeGoogleTokens('bluestacks-master');
-              error = false;
-            } else {
-              error = true;
-            }
-      });
-    console.log('Defined:', error);
-    return error;
+    try {
+      const { gapirefresh } = await retrieveTokens(email);
+      oAuthClient.setCredentials({ refresh_token: gapirefresh });
+      const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
+        await sheets.spreadsheets.values.update({
+            spreadsheetId: id,
+            range: `${tab}!A1:L1`,
+            valueInputOption: 'RAW',
+            resource: {
+              "range": `${tab}!A1:L1`,
+              "majorDimension": "ROWS",
+              "values": [
+                ['Card Name', 'Package name', 'Developer', 'Category', 'Tier', 'Geo', 'Submitted by', 'Game.tv', 'CPI', 'Branding', 'CPC', 'Live']
+              ]
+            },
+            key: process.env.GOOGLE_API_KEY
+          });
+      return true;
+    } catch(err) {
+      console.log(err);
+      return false;
+    }
 }
 
 const updateSpreadsheet = async (id, tab, email, resource) => {
+  try {
     const { gapirefresh } = await retrieveTokens(email);
-    let error = false;
     oAuthClient.setCredentials({ refresh_token: gapirefresh });
     const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
-      sheets.spreadsheets.values.update({
+      await sheets.spreadsheets.values.update({
           spreadsheetId: id,
           range: `${tab}!A2:L${resource.length+1}`,
           valueInputOption: 'RAW',
@@ -52,17 +47,15 @@ const updateSpreadsheet = async (id, tab, email, resource) => {
             "values": resource
           },
           key: process.env.GOOGLE_API_KEY
-        }, async (err, res) => {
-          console.log(err);
-          if (err) {
-            await removeGoogleTokens('bluestacks-master');
-            error = false;
-          } else {
-            error = true;
-          }
-      });
-    console.log(error);
-    return error;
+        });
+    return true;
+  } catch(err) {
+    console.log(err);
+    return false;
+  }
+    
+
+
 }
 
 module.exports = {
