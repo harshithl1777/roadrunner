@@ -25,10 +25,10 @@ const prepareSpreadsheet = async (id, tab, email) => {
           key: process.env.GOOGLE_API_KEY
         }, async (err, res) => {
           if (err) {
-            console.log(err);
             await removeGoogleTokens('bluestacks-master');
-          } 
-          else return true;
+            return false;
+          }
+          return true;
       });
 }
 

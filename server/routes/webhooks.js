@@ -11,9 +11,11 @@ app.post('/api/webhooks', (req, res) => {
     .then(async (tokens) => {
         try {
             const id = await createWebhookTrello(tokens.trellotoken, req.body.modelID);
-            await prepareSpreadsheet(req.body.webhookData.sheetid, req.body.webhookData.tabname, 'bluestacks-master')
-            .then
-            createWebhook(req.body.webhookData, id)
+            const response = await prepareSpreadsheet(req.body.webhookData.sheetid, req.body.webhookData.tabname, 'bluestacks-master');
+            if (!response) {
+                return res.status(500).send({ req: 'fail' });
+            } else {
+                createWebhook(req.body.webhookData, id)
                 .then((dbRes) => {
                     if (dbRes) res.status(201).send({ req: 'success' });
                 })
@@ -21,6 +23,7 @@ app.post('/api/webhooks', (req, res) => {
                     console.log(dbErr);
                     res.status(500).send({ req: 'fail', msg: dbErr })
                 });
+            }
         } catch(err) {
             console.log(err);
             res.status(500).send({ req: 'fail', msg: err });
