@@ -6,31 +6,26 @@ const pool = (process.env.NODE_ENV === 'production')
 
 /**
  * Retrieves user details from database
- * @param {string} email - the user's email
- * @returns {Array} - rows containing user data
+ * @param {string} email The user's email
+ * @returns {Array} Rows containing user data
  */
 const getUser = async (email) => {
-    const { rows, err } = await pool.query('SELECT email, name, password FROM users WHERE email=$1', [email]);
-    if (err) throw err; 
+    const { rows } = await pool.query('SELECT userid, email, name, password FROM users WHERE email=$1', [email]);
     return rows;
 }
 
-
 const retrieveTokens = async (username) => {
-    const { rows, err } = await pool.query('SELECT gapiaccess, gapirefresh, trellotoken FROM users WHERE username=$1', [username]);
-    if (err) throw err;
+    const { rows } = await pool.query('SELECT gapiaccess, gapirefresh, trellotoken FROM users WHERE username=$1', [username]);
     return rows[0];
 }
 
 const addTrelloToken = async (username, token) => {
-    const { err } = await pool.query('UPDATE users SET trellotoken=$1 WHERE username=$2', [token, username]);
-    if (err) throw err;
+    await pool.query('UPDATE users SET trellotoken=$1 WHERE username=$2', [token, username]);
     return true;
 }
 
 const addGoogleTokens = async (username, tokens) => {
-    const { err } = await pool.query('UPDATE users SET gapiaccess=$1, gapirefresh=$2 WHERE username=$3', [tokens.access_token, tokens.refresh_token, username]);
-    if (err) throw err;
+    await pool.query('UPDATE users SET gapiaccess=$1, gapirefresh=$2 WHERE username=$3', [tokens.access_token, tokens.refresh_token, username]);
     return true;
 }
 
