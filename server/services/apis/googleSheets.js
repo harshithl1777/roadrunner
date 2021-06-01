@@ -33,7 +33,6 @@ const prepareSpreadsheet = async (id, tab, email) => {
 }
 
 const updateSpreadsheet = async (id, tab, email, resource) => {
-  try {
     const { gapirefresh } = await retrieveTokens(email);
     oAuthClient.setCredentials({ refresh_token: gapirefresh });
     const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
@@ -47,13 +46,13 @@ const updateSpreadsheet = async (id, tab, email, resource) => {
             "values": resource
           },
           key: process.env.GOOGLE_API_KEY
-        }, (err, res) => {
-          if (err) throw err;
+        }, async (err, res) => {
+          if (err) {
+            await removeGoogleTokens('bluestacks-master');
+            return false;
+          }
           return true;
       });
-  } catch(err) {
-    await removeGoogleTokens('bluestacks-master');
-  }
 }
 
 module.exports = {
