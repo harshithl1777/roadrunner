@@ -1,0 +1,12 @@
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "roadrunner"
+}
+
+####
+GET http://localhost:5000/test
+Content-Type: application/json
+Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM4OTU0OTg0NyIsImlhdCI6MTYyMjU4MDU0NSwiZXhwIjoxNjIyNTgwNTQ3fQ.iXGz29Cw3uAA8wwqxojKE0uV9WYxEXzgIUfERbf_5to'
