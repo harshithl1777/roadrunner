@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('./config/sentry');
 require('dotenv').config({ path: '../.env' });
 const webhookRouter = require('./routes/webhooks');
@@ -13,6 +14,7 @@ const middleware = require('./routes/middleware');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use('/api/oauth', oauthRouter);
 app.use('/api/webhooks', webhookRouter);
 app.use('/api/services', serviceRouter);
