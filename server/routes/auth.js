@@ -20,11 +20,9 @@ router.post('/login', async (req, res) => {
         const accessToken = jwt.sign({ userid: userRows[0].userid }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
         const refreshToken = jwt.sign({ userid: userRows[0].userid }, process.env.REFRESH_TOKEN_SECRET);
         await addRefreshToken(userRows[0].userid, refreshToken);
-
-        const cookie = `refreshtoken=${refreshToken}; SameSite=none; HttpOnly`;
-        res.setHeader('set-cookie', [cookie]);
-        return res.send({ accessToken, user: userRows[0] });
-    } catch(err) {
+        const oneDayToSeconds = 24 * 60 * 60;
+        return res.cookie('refreshToken', refreshToken, { httpOnly: true }).send('cookie initialized');
+        } catch(err) {
         return res.status(500).send({ code: 500, message: 'Internal server error' });
     }
 });
@@ -61,5 +59,10 @@ router.delete('/logout', async (req, res) => {
         return res.status(500).send({ code: 500, message: 'Internal server error' });
     }
 });
+
+router.get('/receive', (req, res) => {
+    console.log(req.cookies);
+    console.log(req.get('host'));
+})
 
 module.exports = router;

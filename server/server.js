@@ -12,9 +12,10 @@ const serviceRouter = require('./routes/receivers');
 const middleware = require('./routes/middleware');
 
 const app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(cookieParser());
+
 app.use('/api/oauth', oauthRouter);
 app.use('/api/webhooks', webhookRouter);
 app.use('/api/services', serviceRouter);
