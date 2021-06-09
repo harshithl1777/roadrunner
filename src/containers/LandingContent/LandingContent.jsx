@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar.jsx';
 import backdrop from './assets/backdrop.svg';
 import './landingcontent.css';
 

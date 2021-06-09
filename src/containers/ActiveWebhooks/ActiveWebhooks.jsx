@@ -4,10 +4,10 @@ import _ from 'lodash';
 
 import deleteIcon from './assets/deleteIcon.svg';
 import addIcon from './assets/addIcon.svg';
-import WebhookRow from '../../components/WebhookRow/WebhookRow';
-import NewWebhook from '../NewWebhook/NewWebhook';
-import DeleteWebhook from '../DeleteWebhook/DeleteWebhook';
-import Onboarding from '../Onboarding/Onboarding';
+import WebhookRow from '../../components/WebhookRow/WebhookRow.jsx';
+import NewWebhook from '../NewWebhook/NewWebhook.jsx';
+import DeleteWebhook from '../DeleteWebhook/DeleteWebhook.jsx';
+import Onboarding from '../Onboarding/Onboarding.jsx';
 import { getTokens } from '../../services/api/oAuth';
 import { retrieveWebhooks } from '../../services/api/webhooks';
 import loading from './assets/loading.svg';
