@@ -28,8 +28,19 @@ const addGoogleTokens = async (username, tokens) => {
     return true;
 }
 
+const addGoogleAccessToken = async (username, access_token) => {
+    const { rows, err } = await pool.query('UPDATE users SET gapiaccess=$1 WHERE username=$2', [access_token, username]);
+    if (err) throw err;
+    return true;
+}
+
 const removeGoogleTokens = async (username) => {
     await pool.query('UPDATE users SET gapiaccess=null, gapirefresh=null WHERE username=$1', [username]);
+    return true;
+}
+
+const removeTrelloTokens = async (username) => {
+    await pool.query('UPDATE users SET trellotoken=null WHERE username=$1', [username]);
     return true;
 }
 
@@ -38,6 +49,8 @@ module.exports = {
     retrieveTokens,
     addTrelloToken,
     addGoogleTokens,
-    removeGoogleTokens
+    removeGoogleTokens,
+    removeTrelloTokens,
+    addGoogleAccessToken
 };
 

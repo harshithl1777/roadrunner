@@ -9,8 +9,8 @@ const oAuthClient = new google.auth.OAuth2(
 
 const prepareSpreadsheet = async (id, tab, email) => {
     try {
-      const { gapirefresh } = await retrieveTokens(email);
-      oAuthClient.setCredentials({ refresh_token: gapirefresh });
+      const { gapirefresh, gapiaccess } = await retrieveTokens(email);
+      oAuthClient.setCredentials({ refresh_token: gapirefresh, access_token: gapiaccess });
       const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
         await sheets.spreadsheets.values.update({
             spreadsheetId: id,
@@ -35,8 +35,8 @@ const prepareSpreadsheet = async (id, tab, email) => {
 
 const updateSpreadsheet = async (id, tab, email, resource) => {
   try {
-    const { gapirefresh } = await retrieveTokens(email);
-    oAuthClient.setCredentials({ refresh_token: gapirefresh });
+    const { gapirefresh, gapiaccess } = await retrieveTokens(email);
+    oAuthClient.setCredentials({ refresh_token: gapirefresh, access_token: gapiaccess });
     const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
       await sheets.spreadsheets.values.update({
           spreadsheetId: id,

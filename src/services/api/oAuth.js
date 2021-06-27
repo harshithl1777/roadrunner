@@ -19,3 +19,8 @@ export const sendGoogleAuthCode = async (email, code) => {
     const { status } = await axios.post(`${process.env.REACT_APP_API_URL}/api/oauth/google`, { email, code });
     return status;
 }
+
+export const deleteTokens = async (service) => {
+    const { status } = await axios.delete(`${process.env.REACT_APP_API_URL}/api/auth/tokens?service=${service}`);
+    return status;
+}

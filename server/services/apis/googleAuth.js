@@ -1,4 +1,5 @@
 const { google } = require('googleapis');
+const { addGoogleAccessToken } = require('../../models/users');
 
 // OAuth client initialization
 const oAuthClient = new google.auth.OAuth2(
@@ -20,6 +21,10 @@ const exchangeToken = async (code) => {
     const { tokens } = await oAuthClient.getToken(code);
     return tokens;
 }
+
+oAuthClient.on('tokens', (tokens) => {
+    if (tokens.access_token) addGoogleAccessToken('bluestacks-master', tokens.access_token);
+});
 
 module.exports = {
     acquireAuthURL,
