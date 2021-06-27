@@ -72,8 +72,8 @@ const Onboarding = ({ cancel }) => {
                 </div>
             </div>
             <div className='onboarding-content' ref={contentWindow}>
-                <h1 className='onboarding-header'>Onboarding Steps</h1>
-                <h3 className='onboarding-desc'>Hey! Looks like you haven't logged in yet. You’ll need to authorize Roadrunner to use your Google and Trello accounts.</h3>
+                <h1 className='onboarding-header'>Third-Party Services</h1>
+                <h3 className='onboarding-desc'>Hey there! Looks like you've disconnected your Google / Trello accounts from Roadrunner. Please sign in again.</h3>
                 <div className='onboarding-labels'>
                     <label className='onboarding-google-label'>Connect your Google Account</label>
                     <label className='onboarding-trello-label'>Connect your Trello Account</label>

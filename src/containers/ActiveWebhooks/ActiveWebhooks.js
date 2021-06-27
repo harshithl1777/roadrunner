@@ -8,7 +8,7 @@ import WebhookRow from '../../components/WebhookRow/WebhookRow';
 import NewWebhook from '../NewWebhook/NewWebhook';
 import DeleteWebhook from '../DeleteWebhook/DeleteWebhook';
 import Onboarding from '../Onboarding/Onboarding';
-import { getTokens } from '../../services/api/oAuth';
+import { getTokens, deleteTokens } from '../../services/api/oAuth';
 import { retrieveWebhooks } from '../../services/api/webhooks';
 import loading from './assets/loading.svg';
 import './activewebhooks.css';
@@ -33,10 +33,33 @@ const ActiveWebhooks = () => {
     const renderOnboarding = () => {
         if (onboardingOpen === null) {
             getTokens('bluestacks-master')
-            .then(data => {
-                if (!(data.gapiaccess && data.gapirefresh && data.trellotoken)) {
-                    setOnboardingOpen(true);
+            .then(tokens => {
+                console.log(tokens);
+                if (tokens.trellotoken !== null && tokens.trellotoken !== undefined) {
+                    axios.get(`https://api.trello.com/1/tokens/${tokens.trellotoken}`, {
+                        params: {
+                            key: process.env.REACT_APP_TRELLO_API_KEY,
+                            token: tokens.trellotoken
+                        }
+                    })
+                    .then(res => console.log(res))
+                    .catch(({ status }) => {
+                        if (status !== 200) deleteTokens('trello');
+                    });
                 }
+                if (tokens.gapiaccess !== null && tokens.gapiaccess !== undefined) {
+                    axios.post(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${tokens.gapiaccess}`)
+                    .then(res => console.log(res))
+                    .catch(({ status }) => {
+                        if (status !== 200) deleteTokens('google');
+                    });
+                }
+                getTokens('bluestacks-master')
+                .then(tokens => {
+                    if (!(tokens.gapiaccess && tokens.gapirefresh && tokens.trellotoken)) {
+                        setOnboardingOpen(true);
+                    }
+                });
             })
             .catch((err) => {
                 alert(err);
