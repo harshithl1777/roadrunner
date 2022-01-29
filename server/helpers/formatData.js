@@ -11,21 +11,10 @@ const removeUnwanted = (data) => {
 
 const formatName = (data) => {
     return data.map(card => {
-        if (card.name.includes('Tier')) {
-            const name = card.name.slice(0, card.name.search('Tier')-3);
-            card.tier = card.name.slice(card.name.search('Tier'), card.name.search('Tier')+6).toUpperCase();
-            card.geo = card.name.slice(card.name.search('Tier')+9).toUpperCase();
-            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No';
-            card.name = name;
-            return card;
-        } else {
-            const name = card.name.slice(0, card.name.search('-')-1);
-            card.tier = 'No Data';
-            card.geo = card.name.slice(card.name.search('-')+2).toUpperCase();
-            card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No';
-            card.name = name;
-            return card;
-        }
+        const name = card.name.slice(0, card.name.search('-')-1);
+        card.cpi = (card.name.includes('[CPI]')) ? 'Yes' : 'No';
+        card.name = name;
+        return card;
     });
 }
 
@@ -34,15 +23,15 @@ const formatDesc = (data) => {
         const desc = card.desc.split('\n');
         card.pkgName = 'No Data';
         card.developer = 'No Data';
-        card.submittedBy = 'No Data';
-        card.category = 'No Data';
+        card.categories = 'No Data';
         desc.forEach((item1) => {
             console.log(item1);
             const itemCopy = item1.toLowerCase().replace(/\s+/g, '');
-            if (itemCopy.includes('packagename')) card.pkgName = item1.slice(item1.search(':')+2);
+            if (itemCopy.includes('package_name')) card.pkgName = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('developer:')) card.developer = item1.slice(item1.search(':')+2);
-            else if (itemCopy.includes('broughttousby')) card.submittedBy = capitalize(item1.slice(item1.search(':')+2, item1.search('@')));
-            else if (itemCopy.includes('category')) card.category = item1.slice(item1.search(':')+2);
+            else if (itemCopy.includes('categories')) card.categories = item1.slice(item1.search(':')+2);
+            else if (itemCopy.includes('target geos')) card.geo = item1.slice(item1.search(':')+2);
+            else if (itemCopy.includes('ratings')) card.tier = item1.slice(item1.search(':')+2);
         });
         return card;
     });
@@ -92,10 +81,9 @@ const createResource = (data) => {
             card.name, 
             card.pkgName, 
             card.developer, 
-            card.category, 
+            card.categories, 
             card.tier, 
             card.geo,
-            card.submittedBy,
             card.gameTV,
             card.cpi,
             card.branding,

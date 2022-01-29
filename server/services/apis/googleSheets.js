@@ -14,10 +14,10 @@ const prepareSpreadsheet = async (id, tab, email) => {
       const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
         await sheets.spreadsheets.values.update({
             spreadsheetId: id,
-            range: `${tab}!A1:L1`,
+            range: `${tab}!A1:K1`,
             valueInputOption: 'RAW',
             resource: {
-              "range": `${tab}!A1:L1`,
+              "range": `${tab}!A1:K1`,
               "majorDimension": "ROWS",
               "values": [
                 ['Card Name', 'Package name', 'Developer', 'Category', 'Tier', 'Geo', 'Submitted by', 'Game.tv', 'CPI', 'Branding', 'CPC', 'Live']
