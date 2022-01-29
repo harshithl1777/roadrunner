@@ -25,9 +25,8 @@ const formatDesc = (data) => {
         card.developer = 'No Data';
         card.categories = 'No Data';
         desc.forEach((item1) => {
-            console.log(item1);
             const itemCopy = item1.toLowerCase().replace(/\s+/g, '');
-            if (itemCopy.includes('package_name')) card.pkgName = item1.slice(item1.search(':')+2);
+            if (itemCopy.includes('package_name') || itemCopy.includes('Package name') || itemCopy.includes('Package Name')) card.pkgName = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('developer:')) card.developer = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('categories')) card.categories = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('target geos')) card.geo = item1.slice(item1.search(':')+2);
