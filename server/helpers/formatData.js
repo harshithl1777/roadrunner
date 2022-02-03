@@ -31,6 +31,8 @@ const formatDesc = (data) => {
             else if (itemCopy.includes('categories')) card.categories = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('target geos')) card.geo = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('ratings')) card.tier = item1.slice(item1.search(':')+2);
+
+            if (itemCopy.includes('target geos')) console.log(item1.slice(item1.search(':')+2));
         });
         return card;
     });
