@@ -21,6 +21,7 @@ const formatName = (data) => {
 const formatDesc = (data) => {
     return data.map(card => {
         const desc = card.desc.split('\n');
+        console.log(desc);
         card.pkgName = 'No Data';
         card.developer = 'No Data';
         card.categories = 'No Data';
@@ -32,7 +33,7 @@ const formatDesc = (data) => {
             else if (itemCopy.includes('target geos')) card.geo = item1.slice(item1.search(':')+2);
             else if (itemCopy.includes('ratings')) card.tier = item1.slice(item1.search(':')+2);
 
-            if (itemCopy.includes('target geos')) console.log(item1.slice(item1.search(':')+2));
+            if (itemCopy.includes('target geos')) console.log('Found geos');
         });
         return card;
     });
