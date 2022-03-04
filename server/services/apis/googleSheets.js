@@ -40,10 +40,10 @@ const updateSpreadsheet = async (id, tab, email, resource) => {
     const sheets = google.sheets({ version: 'v4', auth: oAuthClient });
       await sheets.spreadsheets.values.update({
           spreadsheetId: id,
-          range: `${tab}!A2:L${resource.length+1}`,
+          range: `${tab}!A2:K${resource.length+1}`,
           valueInputOption: 'RAW',
           resource: {
-            "range": `${tab}!A2:L${resource.length+1}`,
+            "range": `${tab}!A2:K${resource.length+1}`,
             "majorDimension": "ROWS",
             "values": resource
           },
